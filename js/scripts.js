@@ -1,6 +1,38 @@
+//Site setup
+const WP_SITE_URL = 'http://localhost/km/';
+const WP_REST = WP_SITE_URL + 'wp-json/wp/v2/';
+const WP_POSTS = WP_REST + 'posts?per_page=20';
+console.log(WP_POSTS);
+
+//load posts from wp site var Ajax
+$( document ).ready(function(){
+        $.ajax({
+            url : WP_POSTS,
+            dataType : "json",
+            type : "get",
+            async : true,
+            success : function(data) {
+                $("#wp_posts").html("");
+                $.each(data,function(i,item){
+console.log(item);
+                    $("#wp_posts").append(
+							"<li><div class='collapsible-header'><i class='material-icons'>filter_drama</i>"
+							+ item.title.rendered +
+							"<span class='new badge'>"+ i +"</span></div><div class='collapsible-body'><span>"
+							+ item.content.rendered +
+							"</span></div></li>"
+                    );
+                });
+            }
+        })
+});
+
+
+//menu
 $( document ).ready(function(){
 	 $(".button-collapse").sideNav();
-})
+});
+//modal
   $('.modal').modal({
       dismissible: true, // Modal can be dismissed by clicking outside of the modal
       opacity: .5, // Opacity of modal background
@@ -15,10 +47,10 @@ $( document ).ready(function(){
       complete: function() {  } // Callback for Modal close
     }
   );
-  
-    $('.chips').material_chip();
-  $('.chips-initial').material_chip({
-    data: [{
+//Tag input
+	$('.chips').material_chip();
+	$('.chips-initial').material_chip({
+	data: [{ // autocomplete data
       tag: 'Apple',
     }, {
       tag: 'Microsoft',
@@ -41,3 +73,5 @@ $( document ).ready(function(){
       minLength: 1
     }
   });
+  
+//Get posts
