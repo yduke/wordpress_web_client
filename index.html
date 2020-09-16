@@ -20,13 +20,13 @@
         <li><a href="#">Sass</a></li>
         <li><a href="#">Components</a></li>
         <li><a href="#">Javascript</a></li>
-        <li><a href="#">Mobile</a></li>
+        <li><a class="btn modal-trigger" href="#modal2">Drafts</a></li>
       </ul>
       <ul class="side-nav" id="mobile-demo">
         <li><a href="#">Sass</a></li>
         <li><a href="#">Components</a></li>
         <li><a href="#">Javascript</a></li>
-        <li><a href="#">Mobile</a></li>
+        <li><a class="btn modal-trigger" href="#modal2">Drafts</a></li>
       </ul>
     </div>
   </nav>
@@ -60,21 +60,21 @@
 		</div>
 		</li>
 	</ul>
-	<!-- Modal Structure -->
+	<!-- Form Modal Structure -->
 	<div id="modal1" class="modal">
 		<div class="modal-content">
 			<!-- Post form -->
 			<div class="row">
-				<form class="col s12">
+				<form class="col s12" id="postform">
 					<div class="row">
 						<div class="input-field col s6">
-							<input id="input_text" type="text" data-length="10">
+							<input id="title" type="text" data-length="10">
 							<label for="input_text">Title</label>
 						</div>
 					</div>
 					<div class="row">
 						<div class="input-field col s12">
-							<textarea id="textarea1" class="materialize-textarea" data-length="480"></textarea>
+							<textarea id="content" class="materialize-textarea" data-length="480"></textarea>
 							<label for="textarea1">Post Content</label>
 						</div>
 					</div>
@@ -88,6 +88,18 @@
 					<i class="material-icons right">send</i>
 					</button>
 				</form>
+			</div>
+			<!-- Post form -->
+		</div>
+	</div>
+	<!-- Draft Modal Structure -->
+	<div id="modal2" class="modal">
+		<div class="modal-content">
+			<!-- Post form -->
+			<div class="row">
+				<ul id="draftbox" class="collapsible" data-collapsible="accordion">
+
+				</ul>
 			</div>
 			<!-- Post form -->
 		</div>
