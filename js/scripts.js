@@ -1,8 +1,17 @@
+//Setup local storage
+if (typeof(Storage) !== "undefined") {
+  // localStorage/sessionStorage.
+  localStorage.wp_site_url = "http://localhost/km/";
+  sessionStorage.wp_site_pw = "iloveduke";
+} else {
+	console.log('Warning: Local storage is not supported.');
+}
+
 //Site setup
-const WP_SITE_URL = 'http://localhost/km/';
+const WP_SITE_URL = localStorage.wp_site_url;
 const WP_REST = WP_SITE_URL + 'wp-json/wp/v2/';
-const WP_POSTS = WP_REST + 'posts?per_page=20';
-console.log(WP_POSTS);
+const WP_POSTS = WP_REST + 'posts?per_page=15';
+
 
 //load posts from wp site var Ajax
 $( document ).ready(function(){
@@ -26,6 +35,8 @@ console.log(item);
             }
         })
 });
+
+
 
 
 //menu
