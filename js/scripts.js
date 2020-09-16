@@ -1,3 +1,54 @@
+
+//menu
+$( document ).ready(function(){
+	 $(".button-collapse").sideNav();
+});
+//modal
+  $('.modal').modal({
+      dismissible: true, // Modal can be dismissed by clicking outside of the modal
+      opacity: .5, // Opacity of modal background
+      inDuration: 300, // Transition in duration
+      outDuration: 200, // Transition out duration
+      startingTop: '4%', // Starting top style attribute
+      endingTop: '10%', // Ending top style attribute
+      ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+
+        console.log(modal, trigger);
+      },
+      complete: function() {  } // Callback for Modal close
+    }
+  );
+//Tag input
+	$('.chips').material_chip();
+	$('.chips-initial').material_chip({
+	data: [{ // autocomplete data
+      tag: 'Apple',
+    }, {
+      tag: 'Microsoft',
+    }, {
+      tag: 'Google',
+    }],
+  });
+  $('.chips-placeholder').material_chip({
+    placeholder: 'Enter a tag',
+    secondaryPlaceholder: '+Tag',
+  });
+  $('.chips-autocomplete').material_chip({
+    autocompleteOptions: {
+      data: {
+        'Apple': null,
+        'Microsoft': null,
+        'Google': null
+      },
+      limit: Infinity,
+      minLength: 1
+    }
+  });
+
+
+
+
+
 //Setup local storage
 if (typeof(Storage) !== "undefined") {
   // localStorage/sessionStorage.
@@ -11,6 +62,7 @@ if (typeof(Storage) !== "undefined") {
 const list = document.querySelector('#draftbox');
 const titleInput = document.querySelector('#title');
 const bodyInput = document.querySelector('#content');
+const tagsInput = JSON.stringify($('#tags').material_chip('data'));// it is an object, should be a str, needs work
 const form = document.querySelector('#postform');
 const submitBtn = document.querySelector('form button');
 
@@ -52,6 +104,7 @@ window.onload = function() {
     // Define what data items the objectStore will contain
     objectStore.createIndex('title', 'title', { unique: false });
     objectStore.createIndex('body', 'body', { unique: false });
+    objectStore.createIndex('tags', 'tags', { unique: false });
 
     console.log('Database setup complete');
   };
@@ -65,7 +118,7 @@ window.onload = function() {
     e.preventDefault();
 
     // grab the values entered into the form fields and store them in an object ready for being inserted into the DB
-    let newItem = { title: titleInput.value, body: bodyInput.value };
+    let newItem = { title: titleInput.value, body: bodyInput.value, tags: tagsInput };
 
     // open a read/write db transaction, ready for adding the data
     let transaction = db.transaction(['notes_os'], 'readwrite');
@@ -79,6 +132,7 @@ window.onload = function() {
       // Clear the form, ready for adding the next entry
       titleInput.value = '';
       bodyInput.value = '';
+     tagsInput.length = 0;
     };
 
     // Report on the success of the transaction completing, when everything is done
@@ -133,7 +187,7 @@ window.onload = function() {
 
         // Create a button and place it inside each listItem
         const deleteBtn = document.createElement('button');
-        listItem.appendChild(deleteBtn);
+        para.appendChild(deleteBtn);
         deleteBtn.textContent = 'Del';
         deleteBtn.classList.add("btn-floating","waves-effect","waves-light");
 
@@ -219,50 +273,5 @@ console.log(item);
 
 
 
-//menu
-$( document ).ready(function(){
-	 $(".button-collapse").sideNav();
-});
-//modal
-  $('.modal').modal({
-      dismissible: true, // Modal can be dismissed by clicking outside of the modal
-      opacity: .5, // Opacity of modal background
-      inDuration: 300, // Transition in duration
-      outDuration: 200, // Transition out duration
-      startingTop: '4%', // Starting top style attribute
-      endingTop: '10%', // Ending top style attribute
-      ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
-
-        console.log(modal, trigger);
-      },
-      complete: function() {  } // Callback for Modal close
-    }
-  );
-//Tag input
-	$('.chips').material_chip();
-	$('.chips-initial').material_chip({
-	data: [{ // autocomplete data
-      tag: 'Apple',
-    }, {
-      tag: 'Microsoft',
-    }, {
-      tag: 'Google',
-    }],
-  });
-  $('.chips-placeholder').material_chip({
-    placeholder: 'Enter a tag',
-    secondaryPlaceholder: '+Tag',
-  });
-  $('.chips-autocomplete').material_chip({
-    autocompleteOptions: {
-      data: {
-        'Apple': null,
-        'Microsoft': null,
-        'Google': null
-      },
-      limit: Infinity,
-      minLength: 1
-    }
-  });
   
 //Get posts
