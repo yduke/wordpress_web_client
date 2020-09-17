@@ -258,8 +258,10 @@ $( document ).ready(function(){
             async : true,
             success : function(data) {
                 $("#wp_posts").html("");
+				$("#siteName").html('duke');
+				console.log(data);
                 $.each(data,function(i,item){
-console.log(item);
+
                     $("#wp_posts").append(
 							"<li><div class='collapsible-header'><i class='material-icons'>filter_drama</i>"
 							+ item.title.rendered +
@@ -267,6 +269,7 @@ console.log(item);
 							+ item.content.rendered +
 							"</span></div></li>"
                     );
+					
                 });
             }
         })
