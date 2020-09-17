@@ -62,7 +62,7 @@ if (typeof(Storage) !== "undefined") {
 const list = document.querySelector('#draftbox');
 const titleInput = document.querySelector('#title');
 const bodyInput = document.querySelector('#content');
-const tagsInput = JSON.stringify($('#tags').material_chip('data'));// it is an object, should be a str, needs work
+
 const form = document.querySelector('#postform');
 const submitBtn = document.querySelector('form button');
 
@@ -117,8 +117,10 @@ window.onload = function() {
     // prevent default - we don't want the form to submit in the conventional way
     e.preventDefault();
 
+	let tagsInput = JSON.parse(JSON. stringify($('#tags').material_chip('data')));
+	let tagInputval = Object.values(tagsInput).map(x => x.tag); // TAG will SAVE AS AN Array
     // grab the values entered into the form fields and store them in an object ready for being inserted into the DB
-    let newItem = { title: titleInput.value, body: bodyInput.value, tags: tagsInput };
+    let newItem = { title: titleInput.value, body: bodyInput.value, tags: tagInputval };
 
     // open a read/write db transaction, ready for adding the data
     let transaction = db.transaction(['notes_os'], 'readwrite');
@@ -187,9 +189,9 @@ window.onload = function() {
 
         // Create a button and place it inside each listItem
         const deleteBtn = document.createElement('button');
-        para.appendChild(deleteBtn);
+        listItem.appendChild(deleteBtn);
         deleteBtn.textContent = 'Del';
-        deleteBtn.classList.add("btn-floating","waves-effect","waves-light");
+        deleteBtn.classList.add("btn-floating","waves-effect","waves-light","draftdelete");
 
         // Set an event handler so that when the button is clicked, the deleteItem()
         // function is run
@@ -270,8 +272,13 @@ console.log(item);
         })
 });
 
-
-
-
-  
 //Get posts
+$('#submitDraft').click(function(){
+	if(bodyInput.value != ''){
+		$('#modal1').modal('close');
+		$('#tags div.chip').remove();
+		delete $('#tags').material_chip('data');
+	}else{
+		console.log('ERROR empty content');
+	}
+})
