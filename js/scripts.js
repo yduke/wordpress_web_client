@@ -53,7 +53,7 @@ $( document ).ready(function(){
 if (typeof(Storage) !== "undefined") {
   // localStorage/sessionStorage.
   localStorage.wp_site_url = "http://localhost/km/";
-  sessionStorage.wp_site_pw = "iloveduke";
+  sessionStorage.wp_site_pw = "Sp3eMQA299sVnOcgiAzKCFLG";
 } else {
 	console.log('Warning: Local storage is not supported.');
 }
